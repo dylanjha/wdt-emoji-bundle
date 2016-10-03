@@ -4,6 +4,14 @@
  @contributors https://github.com/needim/wdt-emoji-bundle/graphs/contributors
  @documentation Examples and Documentation - http://ned.im/wdt-emoji-bundle/
  @license Licensed under the MIT licenses: http://www.opensource.org/licenses/mit-license.php
+
+
+ ==============
+  FORKED - https://github.com/dylanjha/wdt-emoji-bundle
+
+  (cc-patch) branch - with crowdcast specific details
+  SOURCE - https://github.com/dylanjha/wdt-emoji-bundle/tree/cc-patch
+ ==============
  */
 
 ;
@@ -115,7 +123,7 @@
       var p = document.createElement('div');
       addClass(p, 'wdt-emoji-picker');
 
-      p.innerHTML = emoji.replace_colons(':smile:');
+      p.innerHTML = '<div class="picker-closed"><svg class="picker-icon" width="69px" height="69px" viewBox="0 0 69 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M34.5,0.75 C15.887,0.75 0.75,15.887 0.75,34.5 C0.75,53.113 15.887,68.25 34.5,68.25 C53.113,68.25 68.25,53.113 68.25,34.5 C68.25,15.887 53.113,0.75 34.5,0.75 L34.5,0.75 L34.5,0.75 Z M34.5,5.086 C50.77,5.086 63.914,18.23 63.914,34.5 C63.914,50.77 50.77,63.914 34.5,63.914 C18.23,63.914 5.086,50.77 5.086,34.5 C5.086,18.23 18.23,5.086 34.5,5.086 L34.5,5.086 L34.5,5.086 Z" id="Fill-1"></path><path d="M29.664,26.637 L29.664,26.637 C29.664,30.43 26.59,33.504 22.797,33.504 C19.004,33.504 15.93,30.43 15.93,26.637 C15.93,22.844 19.004,19.77 22.797,19.77 C26.59,19.77 29.664,22.844 29.664,26.637 L29.664,26.637 L29.664,26.637 Z" id="Fill-2"></path><path d="M53.113,26.73 L53.113,26.73 C53.113,30.523 50.039,33.598 46.246,33.598 C42.453,33.598 39.379,30.523 39.379,26.73 C39.379,22.938 42.453,19.863 46.246,19.863 C50.039,19.863 53.113,22.938 53.113,26.73 L53.113,26.73 L53.113,26.73 Z" id="Fill-3"></path><path d="M49.039,41.059 C46.785,47.277 41.02,51.379 34.562,51.406 C28.105,51.434 22.305,47.387 19.996,41.188 L15.93,42.699 C18.852,50.555 26.293,55.777 34.578,55.742 C42.867,55.707 50.258,50.418 53.117,42.539 L49.039,41.062 L49.039,41.059 L49.039,41.059 Z" id="Fill-4"></path></svg></div>';
 
       p.addEventListener('click', wdtEmojiBundle.openPicker);
 
@@ -206,8 +214,8 @@
 
         return {
           left    : '0px',
-          bottom  : '0px',
-          top     : 'auto',
+          bottom  : 'auto',
+          top     : '0px',
           width   : '100%',
           position: 'fixed'
         }
@@ -216,7 +224,7 @@
       return pos;
     }
 
-    css(wdtEmojiBundle.popup, findBestAvailablePosition(ev.target));
+    // css(wdtEmojiBundle.popup, findBestAvailablePosition(ev.target));
 
     addClass(wdtEmojiBundle.popup, 'open');
 
@@ -232,7 +240,6 @@
     wdtEmojiBundle.closePickers();
 
     addClass(this, 'wdt-emoji-picker-open');
-    this.innerHTML = emoji.replace_colons(':sunglasses:');
   };
 
   /**
@@ -370,7 +377,6 @@
    */
   wdtEmojiBundle.closePicker = function (element) {
     removeClass(element, 'wdt-emoji-picker-open');
-    element.innerHTML = emoji.replace_colons(':smile:');
     var parent = findParent(element, 'wdt-emoji-picker-parent');
     if (wdtEmojiBundle.searchInput) {
       wdtEmojiBundle.searchInput.value = "";
