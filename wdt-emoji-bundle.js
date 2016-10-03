@@ -54,12 +54,11 @@
 	};
 
   /**
-   * Init the bundle with selector, YAY!
+   * Setup the bundle and override emoji library defaults
+   *
    */
-  wdtEmojiBundle.init = function (selector) {
-
+  wdtEmojiBundle.setup = function () {
     // emoji.js overrides
-
     emoji.allow_native = this.defaults.allowNative;
     emoji.img_set = this.defaults.emojiType;
     emoji.use_sheet = true;
@@ -68,7 +67,12 @@
     emoji.img_sets['google']['sheet'] = this.defaults.emojiSheets.google;
     emoji.img_sets['twitter']['sheet'] = this.defaults.emojiSheets.twitter;
     emoji.img_sets['emojione']['sheet'] = this.defaults.emojiSheets.emojione;
+  }
 
+  /**
+   * Init the bundle with selector, YAY!
+   */
+  wdtEmojiBundle.init = function (selector) {
     var self = this;
 
     self.selector = selector;
