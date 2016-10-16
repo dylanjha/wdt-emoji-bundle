@@ -25,7 +25,7 @@
   }
 })(this, function () {
   var wdtEmojiBundle = {};
-
+  wdtEmojiBundle.listeners = []
   wdtEmojiBundle.defaults = {
     pickerColors : ['green', 'pink', 'yellow', 'blue', 'gray'],
     textMode     : true,
@@ -69,6 +69,13 @@
     this.emoji.img_sets['google']['sheet'] = this.defaults.emojiSheets.google;
     this.emoji.img_sets['twitter']['sheet'] = this.defaults.emojiSheets.twitter;
     this.emoji.img_sets['emojione']['sheet'] = this.defaults.emojiSheets.emojione;
+  }
+
+  wdtEmojiBundle.teardown = function () {
+    for (var i = 0; i < this.listeners.length; i++) {
+      var listener = this.listeners[i];
+      document.removeEventListener(listener.eventType, listener.handler);
+    }
   }
 
   /**
@@ -138,7 +145,10 @@
       addClass(parent, 'wdt-emoji-picker-parent');
       parent.appendChild(p);
       if (hasClass(element, 'wdt-emoji-open-on-colon')) {
-        parent.addEventListener('keyup', wdtEmojiBundle.onKeyup)
+        live('keyup', '.wdt-emoji-picker-parent', function(event) {
+          wdtEmojiBundle.onKeyup(event);
+          return false;
+        });
       }
       addClass(element, 'wdt-emoji-picker-ready');
     }
@@ -864,8 +874,7 @@
    * @param cb
    */
   var live = function (eventType, elementQuerySelector, cb) {
-    document.addEventListener(eventType, function (event) {
-
+    var eventHandler = function (event) {
       var qs = document.querySelectorAll(elementQuerySelector);
 
       if (qs) {
@@ -878,6 +887,12 @@
           cb.call(el, event);
         }
       }
+    };
+    document.addEventListener(eventType, eventHandler);
+    // save a reference to this listener so we can un-listen later
+    wdtEmojiBundle.listeners.push({
+      eventType: eventType,
+      handler: eventHandler
     });
   };
 
